@@ -1,0 +1,15 @@
+{
+    "help": {
+        "description": "Эта команда поможет вам разобраться с ботом.",
+        "usages": [
+            "{{prefix}}help",
+            "{{prefix}}help <команда>"
+        ]
+    },
+    "ping": {
+        "description": "Только пинг, ничего лишнего.",
+        "usages": [
+            "{{prefix}}ping"
+        ]
+    }
+}
