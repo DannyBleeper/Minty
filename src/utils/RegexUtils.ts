@@ -1,10 +1,5 @@
-class RegexUtils {
-    /**
-     * @static
-     * @param {string} str
-     * @return {RegExp} 
-     */
-    static strToRegex(str) {
+abstract class RegexUtils {
+    public static strToRegex(str: string): RegExp {
         const main = str.match(/\/(.+)\/.*/);
         const options = str.match(/\/.+\/(.*)/);
         if (main) return new RegExp(main[1], options ? options[1] : null);
@@ -12,4 +7,4 @@ class RegexUtils {
     }
 }
 
-module.exports = RegexUtils;
+export { RegexUtils };

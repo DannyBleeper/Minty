@@ -1,0 +1,18 @@
+[
+    {
+        "name": "description",
+        "text": "Описание"
+    },
+    {
+        "name": "usage",
+        "text": "Использование"
+    },
+    {
+        "name": "aliases",
+        "text": "Псевдонимы"
+    },
+    {
+        "name": "help_hint",
+        "text": "Чтобы узнать больше о командах, пишите `{{prefix}}help <команда>`"
+    }
+]

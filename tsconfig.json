@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "ESNext",
+        "lib": ["ESNext"],
+        "types": ["reflect-metadata"],
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "outDir": "dist"
+    },
+    "include": ["src"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
+}

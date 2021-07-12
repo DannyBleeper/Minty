@@ -1,14 +1,14 @@
-class RandomUtils {
-    static getRandomInt(min, max) {
+abstract class RandomUtils {
+    public static getRandomInt(min: number, max: number): number {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min)) + min; // max is exclusive, min is inclusive
     }
 
-    static getRandomElement(arr) {
+    public static getRandomElement<T>(arr: T[]): T {
         if (!Array.isArray(arr)) return null;
         return arr[this.getRandomInt(0, arr.length)];
     }
 }
 
-module.exports = RandomUtils;
+export { RandomUtils };
