@@ -45,7 +45,6 @@ class Minty {
     }
 
     public async start(): Promise<void> {
-        this._commandService.init();
         this._client.login(this._token);
 
         this._client.on("ready", async () => {

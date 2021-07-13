@@ -4,7 +4,7 @@ import { CommandInfo } from "../language models/CommandInfo";
 import { MongoRepository } from "../database/repositories/GenericMongoRepository";
 import { Guild } from "../database/models/Guild";
 import { User } from "../database/models/User";
-import { container, inject, singleton } from "tsyringe";
+import { container, inject, injectAll, singleton } from "tsyringe";
 import {
     CommandToken,
     GuildRepositoryToken,
@@ -27,15 +27,13 @@ class CommandService {
     constructor(
         @inject(GuildRepositoryToken) guildRepository: MongoRepository<Guild>,
         @inject(UserRepositoryToken) userRepository: MongoRepository<User>,
+        @injectAll(CommandToken) commands: Command[],
         languageService: LanguageService
     ) {
         this._guildRepository = guildRepository;
         this._userRepository = userRepository;
+        this._commands = commands;
         this._languageService = languageService;
-    }
-
-    public init(): void {
-        this._commands = container.resolveAll<Command>(CommandToken);
     }
 
     public find(commandName: string): Command {
