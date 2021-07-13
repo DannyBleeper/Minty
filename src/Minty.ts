@@ -1,11 +1,17 @@
 import { Client, Message } from "discord.js";
 import { CommandService } from "./services/CommandService";
 import { MongoDb } from "./database/MongoDb";
-import { GuildService } from "./services/GuildService";
-import { UserService } from "./services/UserService";
 import { ResponseService } from "./services/ResponseService";
-import { DiscordToken, DbUriToken } from "./tsyringe.config";
+import {
+    DiscordToken,
+    DbUriToken,
+    GuildServiceToken,
+    UserServiceToken,
+} from "./tsyringe.config";
 import { inject, singleton } from "tsyringe";
+import { BaseRepositoryService } from "./services/BaseRepositoryService";
+import { Guild } from "./database/models/Guild";
+import { User } from "./database/models/User";
 
 @singleton()
 class Minty {
@@ -14,18 +20,18 @@ class Minty {
     private readonly _client: Client;
     private readonly _mongoDb: MongoDb;
     private readonly _commandService: CommandService;
-    private readonly _guildService: GuildService;
-    private readonly _userService: UserService;
     private readonly _responseService: ResponseService;
+    private readonly _guildService: BaseRepositoryService<Guild>;
+    private readonly _userService: BaseRepositoryService<User>;
 
     constructor(
         @inject(DiscordToken) token: string,
         @inject(DbUriToken) mongoDbUri: string,
+        @inject(GuildServiceToken) guildService: BaseRepositoryService<Guild>,
+        @inject(UserServiceToken) userService: BaseRepositoryService<User>,
         client: Client,
         mongoDb: MongoDb,
         commandService: CommandService,
-        guildService: GuildService,
-        userService: UserService,
         responseService: ResponseService
     ) {
         this._token = token;

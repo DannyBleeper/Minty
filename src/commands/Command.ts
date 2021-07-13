@@ -1,14 +1,17 @@
 import { FileUtils } from "../utils/FileUtils";
-import { CommandService } from "../services/commandService";
-import { GuildService } from "../services/GuildService";
-import { UserService } from "../services/UserService";
+import { CommandService } from "../services/CommandService";
 import { Client, Message } from "discord.js";
 import { EmbedService } from "../services/EmbedService";
+import { BaseRepositoryService } from "../services/BaseRepositoryService";
+import { Guild } from "../database/models/Guild";
+import { User } from "../database/models/User";
+import { inject } from "tsyringe";
+import { GuildServiceToken, UserServiceToken } from "../tsyringe.config";
 
 abstract class Command {
     protected readonly _commandService: CommandService;
-    protected readonly _guildService: GuildService;
-    protected readonly _userService: UserService;
+    protected readonly _guildService: BaseRepositoryService<Guild>;
+    protected readonly _userService: BaseRepositoryService<User>;
     protected readonly _embedService: EmbedService;
     protected readonly _name: string;
     protected readonly _aliases: string[];
@@ -34,8 +37,8 @@ abstract class Command {
 
     constructor(
         commandService: CommandService,
-        guildService: GuildService,
-        userService: UserService,
+        @inject(GuildServiceToken) guildService: BaseRepositoryService<Guild>,
+        @inject(UserServiceToken) userService: BaseRepositoryService<User>,
         embedService: EmbedService,
         name: string,
         aliases?: string[],

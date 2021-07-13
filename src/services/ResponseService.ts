@@ -3,15 +3,20 @@ import { RegexUtils } from "./../utils/RegexUtils";
 import { RandomUtils } from "./../utils/RandomUtils";
 import { ParseUtils } from "./../utils/ParseUtils";
 import { LanguageService } from "./LanguageService";
-import { GuildService } from "./GuildService";
-import { singleton } from "tsyringe";
+import { inject, singleton } from "tsyringe";
+import { BaseRepositoryService } from "./BaseRepositoryService";
+import { Guild } from "../database/models/Guild";
+import { GuildServiceToken } from "../tsyringe.config";
 
 @singleton()
 class ResponseService {
     private readonly _languageService: LanguageService;
-    private readonly _guildService: GuildService;
+    private readonly _guildService: BaseRepositoryService<Guild>;
 
-    constructor(languageService: LanguageService, guildService: GuildService) {
+    constructor(
+        languageService: LanguageService,
+        @inject(GuildServiceToken) guildService: BaseRepositoryService<Guild>
+    ) {
         this._languageService = languageService;
         this._guildService = guildService;
     }

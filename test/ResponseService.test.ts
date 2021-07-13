@@ -1,14 +1,14 @@
 import "reflect-metadata";
 import "mocha";
 import { expect } from "chai";
-import { ResponseService } from "../src/services/ResponseService";
 import { instance, mock, when } from "ts-mockito";
-import { LanguageService } from "../src/services/LanguageService";
-import { GuildService } from "../src/services/GuildService";
 import { Guild, Message, User } from "discord.js";
 import { Guild as GuildInfo } from "../src/database/models/Guild";
+import { LanguageService } from "../src/services/LanguageService";
+import { GuildService } from "../src/services/GuildService";
+import { ResponseService } from "../src/services/ResponseService";
 
-describe("Minty tests", () => {
+describe("ResponseService tests", () => {
     let languageServiceMock: LanguageService;
     let languageService: LanguageService;
 
@@ -54,7 +54,7 @@ describe("Minty tests", () => {
         responseService = new ResponseService(languageService, guildService);
     });
 
-    it("should return response", async () => {
+    it("should return correct response", async () => {
         when(languageServiceMock.getResponseInfoList("ru")).thenReturn([
             { regex: "test", responses: ["{{mention}} {{prefix}} response"] },
         ]);

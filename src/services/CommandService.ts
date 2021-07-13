@@ -1,16 +1,22 @@
 import { Command } from "../commands/Command";
 import { LanguageService } from "../services/LanguageService";
 import { CommandInfo } from "../language models/CommandInfo";
-import { GuildRepository } from "../database/repositories/GuildRepository";
-import { UserRepository } from "../database/repositories/UserRepository";
-import { container, singleton } from "tsyringe";
-import { CommandToken, registerCommands } from "../tsyringe.config";
+import { MongoRepository } from "../database/repositories/GenericMongoRepository";
+import { Guild } from "../database/models/Guild";
+import { User } from "../database/models/User";
+import { container, inject, singleton } from "tsyringe";
+import {
+    CommandToken,
+    GuildRepositoryToken,
+    UserRepositoryToken,
+} from "../tsyringe.config";
+import { registerCommands } from "../decorators/DI";
 
 @singleton()
 @registerCommands()
 class CommandService {
-    private _guildRepository: GuildRepository;
-    private _userRepository: UserRepository;
+    private _guildRepository: MongoRepository<Guild>;
+    private _userRepository: MongoRepository<User>;
     private _languageService: LanguageService;
     private _commands: Command[];
 
@@ -19,8 +25,8 @@ class CommandService {
     }
 
     constructor(
-        guildRepository: GuildRepository,
-        userRepository: UserRepository,
+        @inject(GuildRepositoryToken) guildRepository: MongoRepository<Guild>,
+        @inject(UserRepositoryToken) userRepository: MongoRepository<User>,
         languageService: LanguageService
     ) {
         this._guildRepository = guildRepository;
