@@ -19,18 +19,19 @@ class ResponseService {
     public async getResponse(language: string, msg: Message): Promise<string> {
         const responseInfoList =
             this._languageService.getResponseInfoList(language);
-        const regex = Object.keys(responseInfoList).find((r) =>
-            RegexUtils.strToRegex(r)?.test(msg.content)
-        );
 
-        if (!regex) return null;
+        const unparsedResponse = responseInfoList.find((r) => {
+            return RegexUtils.strToRegex(r.regex)?.test(msg.content);
+        });
+
+        if (!unparsedResponse) return null;
 
         const guildInfo = await this._guildService.findById(msg.guild.id);
 
         return ParseUtils.parse(
-            RandomUtils.getRandomElement(responseInfoList[regex]),
+            RandomUtils.getRandomElement(unparsedResponse.responses),
             {
-                mention: msg.author.toString(),
+                mention: `<@${msg.author.id}>`,
                 prefix: guildInfo.prefix,
             }
         );
