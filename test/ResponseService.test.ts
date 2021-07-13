@@ -67,4 +67,18 @@ describe("ResponseService tests", () => {
 
         expect(response).to.equal("<@user> . response");
     });
+
+    it("should not return response", async () => {
+        when(languageServiceMock.getResponseInfoList("ru")).thenReturn([
+            { regex: "cheese", responses: ["{{mention}} {{prefix}} response"] },
+        ]);
+
+        when(guildServiceMock.findById(guild.id)).thenResolve(guildInfo);
+
+        when(messageMock.guild).thenReturn(guild);
+
+        const response = await responseService.getResponse("ru", message);
+
+        expect(response).to.equal(null);
+    });
 });
