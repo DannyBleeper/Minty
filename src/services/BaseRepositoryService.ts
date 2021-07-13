@@ -33,4 +33,4 @@ abstract class BaseRepositoryService<T extends BaseModel> {
     }
 }
 
-export { BaseRepositoryService as BaseService };
+export { BaseRepositoryService };
