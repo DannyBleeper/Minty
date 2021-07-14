@@ -15,6 +15,10 @@ class MongoDb {
             })
             .catch((err) => console.log(err));
     }
+
+    public async disconnect(): Promise<void> {
+        return await mongoose.disconnect();
+    }
 }
 
 export { MongoDb };
