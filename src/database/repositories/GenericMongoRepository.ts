@@ -9,7 +9,6 @@ abstract class GenericMongoRepository<T extends BaseModel> {
     }
 
     public async insert(doc: T): Promise<T> {
-        if (this._model.findById(doc._id)) return null;
         return await this._model.create(doc);
     }
 
