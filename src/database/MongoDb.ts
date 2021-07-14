@@ -17,7 +17,7 @@ class MongoDb {
     }
 
     public async disconnect(): Promise<void> {
-        return await mongoose.disconnect();
+        await mongoose.disconnect();
     }
 }
 
