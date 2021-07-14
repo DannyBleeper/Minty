@@ -1,31 +1,16 @@
-import { CommandService } from "../../services/CommandService";
 import { Command } from "../Command";
 import { Client, Message } from "discord.js";
-import { GuildService } from "../../services/GuildService";
-import { UserService } from "../../services/UserService";
-import { EmbedService } from "../../services/EmbedService";
-import { delay, inject, singleton } from "tsyringe";
+import { singleton } from "tsyringe";
+import { CommandServiceProvider } from "../../providers/CommandServiceProvider";
 
 @singleton()
 class Ping extends Command {
-    constructor(
-        @inject(delay(() => CommandService)) commandService: CommandService,
-        guildService: GuildService,
-        userService: UserService,
-        embedService: EmbedService
-    ) {
-        super(
-            commandService,
-            guildService,
-            userService,
-            embedService,
-            "ping",
-            ["пинг"],
-            ["SEND_MESSAGES"]
-        );
+    constructor() {
+        super("ping", ["пинг"], ["SEND_MESSAGES"]);
     }
 
     public async run(
+        serviceProvider: CommandServiceProvider,
         client: Client,
         msg: Message,
         args?: string[]

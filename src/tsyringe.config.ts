@@ -1,4 +1,6 @@
 import { container } from "tsyringe";
+import { Help } from "./commands/general/Help";
+import { Ping } from "./commands/general/Ping";
 import { GuildRepository } from "./database/repositories/GuildRepository";
 import { UserRepository } from "./database/repositories/UserRepository";
 import { GuildService } from "./services/GuildService";
@@ -20,3 +22,6 @@ container.register(UserRepositoryToken, { useClass: UserRepository });
 
 container.register(GuildServiceToken, { useClass: GuildService });
 container.register(UserServiceToken, { useClass: UserService });
+
+container.register(CommandToken, { useToken: Help });
+container.register(CommandToken, { useToken: Ping });

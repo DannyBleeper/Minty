@@ -4,16 +4,14 @@ import { CommandInfo } from "../language models/CommandInfo";
 import { MongoRepository } from "../database/repositories/GenericMongoRepository";
 import { Guild } from "../database/models/Guild";
 import { User } from "../database/models/User";
-import { container, inject, injectAll, singleton } from "tsyringe";
+import { inject, injectAll, singleton } from "tsyringe";
 import {
     CommandToken,
     GuildRepositoryToken,
     UserRepositoryToken,
 } from "../tsyringe.config";
-import { registerCommands } from "../decorators/DI";
 
 @singleton()
-@registerCommands()
 class CommandService {
     private _guildRepository: MongoRepository<Guild>;
     private _userRepository: MongoRepository<User>;

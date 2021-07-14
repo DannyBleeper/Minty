@@ -12,6 +12,7 @@ import { inject, singleton } from "tsyringe";
 import { BaseRepositoryService } from "./services/BaseRepositoryService";
 import { Guild } from "./database/models/Guild";
 import { User } from "./database/models/User";
+import { CommandServiceProvider } from "./providers/CommandServiceProvider";
 
 @singleton()
 class Minty {
@@ -23,6 +24,7 @@ class Minty {
     private readonly _responseService: ResponseService;
     private readonly _guildService: BaseRepositoryService<Guild>;
     private readonly _userService: BaseRepositoryService<User>;
+    private readonly _commandServiceProvider: CommandServiceProvider;
 
     constructor(
         @inject(DiscordToken) token: string,
@@ -32,7 +34,8 @@ class Minty {
         client: Client,
         mongoDb: MongoDb,
         commandService: CommandService,
-        responseService: ResponseService
+        responseService: ResponseService,
+        commandServiceProvider: CommandServiceProvider
     ) {
         this._token = token;
         this._mongoDbUri = mongoDbUri;
@@ -42,6 +45,7 @@ class Minty {
         this._guildService = guildService;
         this._userService = userService;
         this._responseService = responseService;
+        this._commandServiceProvider = commandServiceProvider;
     }
 
     public async start(): Promise<void> {
@@ -77,7 +81,12 @@ class Minty {
 
                 if (!cmd) return;
 
-                await cmd.run(this._client, msg, args);
+                await cmd.run(
+                    this._commandServiceProvider,
+                    this._client,
+                    msg,
+                    args
+                );
             } else if (this.msgMentionsBot(msg)) {
                 const response = await this._responseService.getResponse(
                     guildInfo.language,

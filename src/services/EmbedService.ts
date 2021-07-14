@@ -5,6 +5,7 @@ import { StringUtils } from "./../utils/StringUtils";
 import { Command } from "../commands/Command";
 import { LanguageService } from "./LanguageService";
 import { singleton } from "tsyringe";
+import { CommandService } from "./CommandService";
 
 enum Color {
     Info = "GREEN",
@@ -15,9 +16,14 @@ enum Color {
 @singleton()
 class EmbedService {
     private readonly _languageService: LanguageService;
+    private readonly _commandService: CommandService;
 
-    constructor(languageService: LanguageService) {
+    constructor(
+        languageService: LanguageService,
+        commandService: CommandService
+    ) {
         this._languageService = languageService;
+        this._commandService = commandService;
     }
 
     public getCommandInfoEmbed(
@@ -25,10 +31,16 @@ class EmbedService {
         prefix: string,
         language: string
     ): MessageEmbed {
-        const cmdDescription = cmd.getDescription(language);
-        const cmdUsages = cmd
-            .getUsages(language)
-            .map((u) => ParseUtils.parse(u, { prefix }));
+        if (!cmd) return null;
+
+        const cmdInfo = this._commandService.findInfo(cmd.name, language);
+
+        if (!cmdInfo) return null;
+
+        const cmdDescription = cmdInfo.description;
+        const cmdUsages = cmdInfo.usages.map((u) =>
+            ParseUtils.parse(u, { prefix })
+        );
 
         return new MessageEmbed()
             .setColor(Color.Info)
