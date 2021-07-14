@@ -7,7 +7,7 @@ import { CommandService } from "../src/services/CommandService";
 import { LanguageService } from "../src/services/LanguageService";
 import { CommandInfo } from "../src/language models/CommandInfo";
 
-describe("ResponseService tests", () => {
+describe("CommandService tests", () => {
     let commandMock: Command;
     let command: Command;
 
