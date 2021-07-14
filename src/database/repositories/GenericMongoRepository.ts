@@ -44,4 +44,4 @@ abstract class GenericMongoRepository<T extends BaseModel> {
     }
 }
 
-export { GenericMongoRepository as MongoRepository };
+export { GenericMongoRepository };

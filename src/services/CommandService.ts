@@ -1,7 +1,7 @@
 import { Command } from "../commands/Command";
 import { LanguageService } from "../services/LanguageService";
 import { CommandInfo } from "../language models/CommandInfo";
-import { MongoRepository } from "../database/repositories/GenericMongoRepository";
+import { GenericMongoRepository } from "../database/repositories/GenericMongoRepository";
 import { Guild } from "../database/models/Guild";
 import { User } from "../database/models/User";
 import { inject, injectAll, singleton } from "tsyringe";
@@ -13,8 +13,8 @@ import {
 
 @singleton()
 class CommandService {
-    private _guildRepository: MongoRepository<Guild>;
-    private _userRepository: MongoRepository<User>;
+    private _guildRepository: GenericMongoRepository<Guild>;
+    private _userRepository: GenericMongoRepository<User>;
     private _languageService: LanguageService;
     private _commands: Command[];
 
@@ -23,8 +23,10 @@ class CommandService {
     }
 
     constructor(
-        @inject(GuildRepositoryToken) guildRepository: MongoRepository<Guild>,
-        @inject(UserRepositoryToken) userRepository: MongoRepository<User>,
+        @inject(GuildRepositoryToken)
+        guildRepository: GenericMongoRepository<Guild>,
+        @inject(UserRepositoryToken)
+        userRepository: GenericMongoRepository<User>,
         @injectAll(CommandToken) commands: Command[],
         languageService: LanguageService
     ) {

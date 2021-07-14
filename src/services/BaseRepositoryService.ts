@@ -1,10 +1,10 @@
 import { BaseModel } from "../database/models/BaseModel";
-import { MongoRepository } from "../database/repositories/GenericMongoRepository";
+import { GenericMongoRepository } from "../database/repositories/GenericMongoRepository";
 
 abstract class BaseRepositoryService<T extends BaseModel> {
-    protected readonly _repository: MongoRepository<T>;
+    protected readonly _repository: GenericMongoRepository<T>;
 
-    constructor(repository: MongoRepository<T>) {
+    constructor(repository: GenericMongoRepository<T>) {
         this._repository = repository;
     }
 
