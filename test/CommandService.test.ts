@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import "mocha";
 import { expect } from "chai";
-import { instance, mock, spy, verify, when } from "ts-mockito";
+import { instance, mock, verify, when } from "ts-mockito";
 import { Command } from "../src/commands/Command";
 import { CommandService } from "../src/services/CommandService";
 import { LanguageService } from "../src/services/LanguageService";
