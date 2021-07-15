@@ -12,7 +12,12 @@ abstract class GenericMongoRepository<T> {
     }
 
     public async insertMany(docs: T[]): Promise<T[]> {
-        return await this._model.insertMany(docs);
+        try {
+            return await this._model.insertMany(docs);
+        } catch (err) {
+            // catch error when insterting multiple duplicate keys
+            return null;
+        }
     }
 
     public async findOne(filter: FilterQuery<T>): Promise<T> {
