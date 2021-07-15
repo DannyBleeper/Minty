@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 import { RegexUtils } from "./../utils/RegexUtils";
 import { RandomUtils } from "./../utils/RandomUtils";
-import { ParseUtils } from "./../utils/ParseUtils";
+import { ParseUtils } from "../utils/parse/ParseUtils";
 import { LanguageService } from "./LanguageService";
 import { inject, singleton } from "tsyringe";
 import { BaseDiscordRepositoryService } from "./BaseDiscordRepositoryService";

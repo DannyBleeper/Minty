@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { ParseUtils } from "./../utils/ParseUtils";
+import { ParseUtils } from "../utils/parse/ParseUtils";
 import { GroupUtils } from "./../utils/GroupUtils";
 import { StringUtils } from "./../utils/StringUtils";
 import { Command } from "../commands/Command";
