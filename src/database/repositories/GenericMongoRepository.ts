@@ -15,7 +15,7 @@ abstract class GenericMongoRepository<T> {
         try {
             return await this._model.insertMany(docs);
         } catch (err) {
-            // catch error when insterting multiple duplicate keys
+            // catch error when inserting multiple duplicate keys
             return null;
         }
     }
