@@ -8,12 +8,16 @@ class MongoDb {
     }
 
     public async connect(uri: string): Promise<void | typeof mongoose> {
-        return mongoose
-            .connect(uri, {
+        try {
+            return await mongoose.connect(uri, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
-            })
-            .catch((err) => console.log(err));
+                useFindAndModify: false,
+                useCreateIndex: true,
+            });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     public async disconnect(): Promise<void> {

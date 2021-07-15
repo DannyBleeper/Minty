@@ -17,8 +17,8 @@ class FakeMongoDb {
         const options = {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            poolSize: 10,
             useFindAndModify: false,
+            useCreateIndex: true,
         };
         await mongoose.connect(uri, options);
     }
