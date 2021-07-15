@@ -68,6 +68,8 @@ class EmbedService {
         prefix: string,
         language: string
     ): MessageEmbed {
+        if (!commands || commands.length == 0) return null;
+
         const groupedCmds = GroupUtils.groupBy(commands, (cmd) => cmd.category);
 
         const embed = new MessageEmbed()
