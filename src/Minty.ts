@@ -9,7 +9,7 @@ import {
     UserServiceToken,
 } from "./tsyringe.config";
 import { inject, singleton } from "tsyringe";
-import { BaseRepositoryService } from "./services/BaseRepositoryService";
+import { BaseDiscordRepositoryService } from "./services/BaseDiscordRepositoryService";
 import { Guild } from "./database/models/Guild";
 import { User } from "./database/models/User";
 import { CommandServiceProvider } from "./providers/CommandServiceProvider";
@@ -22,15 +22,17 @@ class Minty {
     private readonly _mongoDb: MongoDb;
     private readonly _commandService: CommandService;
     private readonly _responseService: ResponseService;
-    private readonly _guildService: BaseRepositoryService<Guild>;
-    private readonly _userService: BaseRepositoryService<User>;
+    private readonly _guildService: BaseDiscordRepositoryService<Guild>;
+    private readonly _userService: BaseDiscordRepositoryService<User>;
     private readonly _commandServiceProvider: CommandServiceProvider;
 
     constructor(
         @inject(DiscordToken) token: string,
         @inject(DbUriToken) mongoDbUri: string,
-        @inject(GuildServiceToken) guildService: BaseRepositoryService<Guild>,
-        @inject(UserServiceToken) userService: BaseRepositoryService<User>,
+        @inject(GuildServiceToken)
+        guildService: BaseDiscordRepositoryService<Guild>,
+        @inject(UserServiceToken)
+        userService: BaseDiscordRepositoryService<User>,
         client: Client,
         mongoDb: MongoDb,
         commandService: CommandService,

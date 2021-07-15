@@ -1,7 +1,7 @@
 import { inject, singleton } from "tsyringe";
 import { Guild } from "../database/models/Guild";
 import { User } from "../database/models/User";
-import { BaseRepositoryService } from "../services/BaseRepositoryService";
+import { BaseDiscordRepositoryService } from "../services/BaseDiscordRepositoryService";
 import { CommandService } from "../services/CommandService";
 import { EmbedService } from "../services/EmbedService";
 import { GuildServiceToken, UserServiceToken } from "../tsyringe.config";
@@ -9,14 +9,16 @@ import { GuildServiceToken, UserServiceToken } from "../tsyringe.config";
 @singleton()
 class CommandServiceProvider {
     public readonly commandService: CommandService;
-    public readonly guildService: BaseRepositoryService<Guild>;
-    public readonly userService: BaseRepositoryService<User>;
+    public readonly guildService: BaseDiscordRepositoryService<Guild>;
+    public readonly userService: BaseDiscordRepositoryService<User>;
     public readonly embedService: EmbedService;
 
     constructor(
         commandService: CommandService,
-        @inject(GuildServiceToken) guildService: BaseRepositoryService<Guild>,
-        @inject(UserServiceToken) userService: BaseRepositoryService<User>,
+        @inject(GuildServiceToken)
+        guildService: BaseDiscordRepositoryService<Guild>,
+        @inject(UserServiceToken)
+        userService: BaseDiscordRepositoryService<User>,
         embedService: EmbedService
     ) {
         this.commandService = commandService;

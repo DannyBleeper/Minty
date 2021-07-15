@@ -1,7 +1,6 @@
-import { FilterQuery, Model, UpdateQuery } from "mongoose";
-import { BaseModel } from "../models/BaseModel";
+import { FilterQuery, Model } from "mongoose";
 
-abstract class GenericMongoRepository<T extends BaseModel> {
+abstract class GenericMongoRepository<T> {
     private readonly _model: Model<T>;
 
     constructor(model: Model<T>) {
@@ -12,29 +11,33 @@ abstract class GenericMongoRepository<T extends BaseModel> {
         return await this._model.create(doc);
     }
 
-    public async findOne(id: string, projection?: string): Promise<T> {
-        return await this._model.findById(id, projection).exec();
+    public async insertMany(docs: T[]): Promise<T[]> {
+        return await this._model.insertMany(docs);
     }
 
-    public async find(
-        filter: FilterQuery<T>,
-        projection?: string
-    ): Promise<T[]> {
-        return await this._model.find(filter, projection).exec();
+    public async findOne(filter: FilterQuery<T>): Promise<T> {
+        return await this._model.findOne(filter).exec();
     }
 
-    public async all(projection?: string): Promise<T[]> {
-        return await this._model.find({}, projection).exec();
+    public async find(filter: FilterQuery<T>): Promise<T[]> {
+        return await this._model.find(filter).exec();
     }
 
-    public async delete(id: string): Promise<T> {
-        return await this._model.findByIdAndRemove(id).exec();
+    public async all(): Promise<T[]> {
+        return await this._model.find({}).exec();
     }
 
-    // can't use the T type for doc due to TS bug
-    public async upsert(id: string, doc?: unknown): Promise<T> {
+    public async delete(filter: FilterQuery<T>): Promise<T> {
+        return await this._model.findOneAndDelete(filter).exec();
+    }
+
+    public async deleteMany(filter: FilterQuery<T>): Promise<number> {
+        return (await this._model.deleteMany(filter).exec())?.deletedCount;
+    }
+
+    public async upsert(filter: FilterQuery<T>, doc: T): Promise<T> {
         return await this._model
-            .findByIdAndUpdate(id, doc as UpdateQuery<T>, {
+            .findOneAndUpdate(filter, doc, {
                 upsert: true,
                 new: true,
                 setDefaultsOnInsert: true,

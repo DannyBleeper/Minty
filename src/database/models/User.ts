@@ -1,12 +1,12 @@
 import { Schema, model } from "mongoose";
-import { BaseModel } from "./BaseModel";
+import { BaseDiscordModel } from "./BaseDiscordModel";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface User extends BaseModel {}
+export interface User extends BaseDiscordModel {}
 
 export const UserModel = model<User>(
     "User",
     new Schema({
-        _id: String,
+        discordId: { type: String, required: true, unique: true },
     })
 );

@@ -3,7 +3,7 @@ import "mocha";
 import { expect } from "chai";
 import { instance, mock, when } from "ts-mockito";
 import { Guild, Message, User } from "discord.js";
-import { Guild as GuildInfo } from "../src/database/models/Guild";
+import { Guild as GuildModel } from "../src/database/models/Guild";
 import { LanguageService } from "../src/services/LanguageService";
 import { GuildService } from "../src/services/GuildService";
 import { ResponseService } from "../src/services/ResponseService";
@@ -24,7 +24,7 @@ describe("ResponseService tests", () => {
     let messageMock: Message;
     let message: Message;
 
-    let guildInfo: GuildInfo;
+    let guildModel: GuildModel;
 
     let responseService: ResponseService;
 
@@ -42,14 +42,14 @@ describe("ResponseService tests", () => {
 
         guildMock = mock(Guild);
         guild = instance(guildMock);
-        guild.id = "test";
+        guild.id = "1";
 
         messageMock = mock(Message);
         message = instance(messageMock);
         message.content = "test";
         message.author = user;
 
-        guildInfo = { _id: "test", prefix: ".", language: "ru" };
+        guildModel = { discordId: guild.id, prefix: ".", language: "ru" };
 
         responseService = new ResponseService(languageService, guildService);
     });
@@ -59,7 +59,7 @@ describe("ResponseService tests", () => {
             { regex: "test", responses: ["{{mention}} {{prefix}} response"] },
         ]);
 
-        when(guildServiceMock.findById(guild.id)).thenResolve(guildInfo);
+        when(guildServiceMock.findById(guild.id)).thenResolve(guildModel);
 
         when(messageMock.guild).thenReturn(guild);
 
@@ -73,7 +73,7 @@ describe("ResponseService tests", () => {
             { regex: "cheese", responses: ["{{mention}} {{prefix}} response"] },
         ]);
 
-        when(guildServiceMock.findById(guild.id)).thenResolve(guildInfo);
+        when(guildServiceMock.findById(guild.id)).thenResolve(guildModel);
 
         when(messageMock.guild).thenReturn(guild);
 

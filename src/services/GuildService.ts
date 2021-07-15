@@ -1,10 +1,10 @@
 import { Guild } from "../database/models/Guild";
 import { GuildRepository } from "../database/repositories/GuildRepository";
-import { BaseRepositoryService } from "./BaseRepositoryService";
+import { BaseDiscordRepositoryService } from "./BaseDiscordRepositoryService";
 import { singleton } from "tsyringe";
 
 @singleton()
-class GuildService extends BaseRepositoryService<Guild> {
+class GuildService extends BaseDiscordRepositoryService<Guild> {
     constructor(repository: GuildRepository) {
         super(repository);
     }
