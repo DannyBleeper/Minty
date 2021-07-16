@@ -1,4 +1,4 @@
-import { ParseArgs } from "./ParseOptions";
+import { ParseArgs } from "./ParseArgs";
 
 abstract class ParseUtils {
     public static parse(str: string, args: ParseArgs): string {
